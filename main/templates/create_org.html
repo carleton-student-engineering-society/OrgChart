@@ -1,0 +1,21 @@
+<html>
+
+<body>
+
+<h1>Create an organization</h1>
+
+{% if error %}
+
+<h2>An error occurred!</h2>
+
+{% endif %}
+
+<form method="POST">
+{% csrf_token %}
+<label for="org">Name: </label><input name="org" type="text">
+<input type="submit" value="Create">
+</form>
+
+</body>
+
+</html>

@@ -8,6 +8,7 @@ urlpatterns = [
     path("search/<str:pattern>/", views.search_pattern, name="search_pattern"),
     path("view", views.view, name="view"),
     path("view/<str:org>", views.view_org, name="view_org"),
+    path("view_role/<int:id>", views.view_role, name="view_role"),
     path("add/<str:org/", views.add, name="add"),
     path("create_org", views.create_org, name="create_org"),
 
