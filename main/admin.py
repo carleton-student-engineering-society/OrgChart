@@ -1,14 +1,7 @@
 # from django.contrib import admin
 
-from .models import Organization, Person, Role, Term
+from main.models import Person, Organization, Role, Term
 from django.contrib import admin
-
-
-class OrganizationAdmin(admin.ModelAdmin):
-    pass
-
-
-admin.site.register(Organization, OrganizationAdmin)
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -16,6 +9,13 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Person, PersonAdmin)
+
+
+class OrganizationAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(Organization, OrganizationAdmin)
 
 
 class RoleAdmin(admin.ModelAdmin):
