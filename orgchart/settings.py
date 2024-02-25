@@ -36,6 +36,12 @@ ALLOWED_HOSTS = [
     "chart.engsoc.net"
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://chart.engsoc.net",
+    "http://chart.engsoc.net"
+]
+
+
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
