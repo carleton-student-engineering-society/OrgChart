@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'orgchart',
         'USER': 'orgchart',
-        'PASS': 'orgchart',
+        'PASSWORD': 'orgchart',
         'HOST': '127.0.0.1',
         'CONN_MAX_AGE': 3600,
         'PORT': '3306',
