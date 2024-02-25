@@ -31,9 +31,9 @@ if deploy_type == "PROD":
     DEBUG = False
 
 ALLOWED_HOSTS = [
-"127.0.0.1",
-"localhost",
-"chart.engsoc.net"
+    "127.0.0.1",
+    "localhost",
+    "chart.engsoc.net"
 ]
 
 USE_X_FORWARDED_HOST = True
