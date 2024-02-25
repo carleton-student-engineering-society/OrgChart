@@ -87,7 +87,7 @@ if not DEBUG:
             'NAME': 'orgchart',
             'USER': 'orgchart',
             'PASSWORD': 'orgchart',
-            'HOST': '10.10.0.1',
+            'HOST': '10.10.10.1',
             'CONN_MAX_AGE': 3600,
             'PORT': '3306',
         }
