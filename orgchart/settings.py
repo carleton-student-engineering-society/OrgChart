@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +25,10 @@ SECRET_KEY = 'django-insecure-ar7qag62k5tz1=zmxqm%qic1cfm4(1#qf9j(69knhhmr(%fdjd
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+deploy_type = os.environ.get("PROD")
+if deploy_type == "PROD":
+    DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -75,17 +80,30 @@ WSGI_APPLICATION = 'orgchart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'orgchart',
-        'USER': 'orgchart',
-        'PASSWORD': 'orgchart',
-        'HOST': '127.0.0.1',
-        'CONN_MAX_AGE': 3600,
-        'PORT': '3306',
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'orgchart',
+            'USER': 'orgchart',
+            'PASSWORD': 'orgchart',
+            'HOST': '10.10.0.1',
+            'CONN_MAX_AGE': 3600,
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'orgchart',
+            'USER': 'orgchart',
+            'PASSWORD': 'orgchart',
+            'HOST': '127.0.0.1',
+            'CONN_MAX_AGE': 3600,
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
