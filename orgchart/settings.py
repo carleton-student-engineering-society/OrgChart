@@ -41,6 +41,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ["/usr/share/chart_site/files/static"]
+STATIC_ROOT = '/usr/share/chart_site/files/static'
 
 # Application definition
 
