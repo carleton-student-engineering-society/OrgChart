@@ -41,35 +41,52 @@ def view_org_center(request, org: str, center: int):
         manager = Role.objects.filter(id=center).first()
         terms = Term.objects.filter(end=None, role__org__name=org, role__manager=manager)
         terms2 = Term.objects.filter(end=None, role=manager)
-        above = Term.objects.filter(end=None, role=manager.manager)
+        if manager.manager is not None:
+            above = Term.objects.filter(end=None, role=manager.manager)
+        else:
+            above = []
+        names = ""
         for term in terms2:
-            start = term.start.strftime("%B %d, %Y")
+            names += " - " + term.person.name
+        start = term.start.strftime("%B %d, %Y")
+        nodes += [{"id": term.role.id,
+                   "label": term.role.name + names + " - " +
+                  start + " - " + str(term.role.email),
+                   "shape": NODE_SHAPE,
+                   "size": NODE_SIZE,
+                   "group": "current"}]
+        if len(above) != 0:
+            edges += [{"from": term.role.manager.id, "to": term.role.id, "arrows": "to"}]
+        if len(above) > 0:
+            names = ""
+            for term in above:
+                names += " - " + term.person.name
+            term = above.first()
             nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name + " - " +
-                      start + " - " + str(term.role.email),
-                       "shape": NODE_SHAPE,
-                       "size": NODE_SIZE,
-                       "group": "current"}]
-            if len(above) != 0:
-                edges += [{"from": term.role.manager.id, "to": term.role.id, "arrows": "to"}]
-        for term in above:
-            nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name,
+                       "label": term.role.name + names,
                        "shape": NODE_SHAPE,
                        "size": NODE_SIZE,
                        "group": "above"}]
     for term in terms:
+        print(term)
+        t = Term.objects.filter(end=None, role=term.role)
+        if len(t) > 1:
+            names = ""
+            for t1 in t:
+                names += " - " + t1.person.name
+        else:
+            names = " - " + term.person.name
         if center == 0:
             start = term.start.strftime("%B %d, %Y")
             nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name + " - " +
+                       "label": term.role.name + names + " - " +
                        start + " - " + str(term.role.email),
                        "shape": NODE_SHAPE,
                        "size": NODE_SIZE,
                        "group": term.role.roletype}]
         else:
             nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name,
+                       "label": term.role.name + names,
                        "shape": NODE_SHAPE,
                        "size": NODE_SIZE,
                        "group": term.role.roletype}]
