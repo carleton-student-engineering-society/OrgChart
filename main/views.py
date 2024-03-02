@@ -68,7 +68,13 @@ def view_org_center(request, org: str, center: int):
                        "size": NODE_SIZE,
                        "group": "above"}]
     for term in terms:
-        print(term)
+        found = False
+        for node in nodes:
+            if node['id'] == term.role.id:
+                found = True
+                break
+        if found:
+            continue
         t = Term.objects.filter(end=None, role=term.role)
         if len(t) > 1:
             names = ""
