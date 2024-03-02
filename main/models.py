@@ -17,11 +17,20 @@ class Organization(models.Model):
 
 
 class Role(models.Model):
+    roletype_choices = [
+        ("EX", "Executive"),
+        ("CO", "Councillor"),
+        ("RE", "Representative"),
+        ("DI", "Director"),
+        ("OT", "Other"),
+        ("OF", "Officer")
+    ]
     org = models.ForeignKey("Organization", on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     desc = models.CharField(max_length=1000)
     email = models.CharField(max_length=255, null=True)
     manager = models.ForeignKey("Role", on_delete=models.CASCADE, null=True, blank=True)
+    roletype = models.CharField(max_length=2, choices=roletype_choices, null=True)
 
     def __str__(self):
         return self.name

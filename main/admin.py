@@ -21,8 +21,8 @@ admin.site.register(Organization, OrganizationAdmin)
 
 
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ("org", "name", "email", "manager")
-    search_fields = ("org", "name", "desc", "email", "manager")
+    list_display = ("org", "name", "email", "manager", "roletype")
+    search_fields = ("org", "name", "desc", "email", "manager", "roletype")
 
 
 admin.site.register(Role, RoleAdmin)

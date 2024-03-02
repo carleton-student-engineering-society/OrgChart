@@ -34,6 +34,7 @@ def view_org_center(request, org: str, center: int):
     nodes = []
     edges = []
     NODE_SHAPE = "box"
+    NODE_SIZE = "100"
     if center == 0:
         terms = Term.objects.filter(end=None, role__org__name=org, role__manager=None)
     else:
@@ -46,30 +47,34 @@ def view_org_center(request, org: str, center: int):
             nodes += [{"id": term.role.id,
                        "label": term.role.name + " - " + term.person.name + " - " +
                       start + " - " + str(term.role.email),
-                       "shape": NODE_SHAPE}]
+                       "shape": NODE_SHAPE,
+                       "size": NODE_SIZE,
+                       "group": "current"}]
             if len(above) != 0:
                 edges += [{"from": term.role.manager.id, "to": term.role.id, "arrows": "to"}]
         for term in above:
-            nodes += [{"id": term.role.id, "label": term.role.name + " - " + term.person.name, "shape": NODE_SHAPE}]
+            nodes += [{"id": term.role.id,
+                       "label": term.role.name + " - " + term.person.name,
+                       "shape": NODE_SHAPE,
+                       "size": NODE_SIZE,
+                       "group": "above"}]
     for term in terms:
         if center == 0:
             start = term.start.strftime("%B %d, %Y")
             nodes += [{"id": term.role.id,
                        "label": term.role.name + " - " + term.person.name + " - " +
                        start + " - " + str(term.role.email),
-                       "shape": NODE_SHAPE}]
+                       "shape": NODE_SHAPE,
+                       "size": NODE_SIZE,
+                       "group": term.role.roletype}]
         else:
             nodes += [{"id": term.role.id,
                        "label": term.role.name + " - " + term.person.name,
-                       "shape": NODE_SHAPE}]
-        terms2 = Term.objects.filter(end=None, role__org__name=org, role__manager=term.role)
+                       "shape": NODE_SHAPE,
+                       "size": NODE_SIZE,
+                       "group": term.role.roletype}]
         if center != 0:
             edges += [{"from": term.role.manager.id, "to": term.role.id, "arrows": "to"}]
-        for term2 in terms2:
-            nodes += [{"id": term2.role.id,
-                       "label": term2.role.name + " - " + term2.person.name,
-                       "shape": NODE_SHAPE}]
-            edges += [{"from": term2.role.manager.id, "to": term2.role.id, "arrows": "to"}]
     return render(request, "view_org.html", {'org': o, 'nodes': json.dumps(nodes), 'edges': json.dumps(edges)})
 
 
