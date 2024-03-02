@@ -44,7 +44,8 @@ def view_org_center(request, org: str, center: int):
         for term in terms2:
             start = term.start.strftime("%B %d, %Y")
             nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name + " - " + start + " - " + term.role.email,
+                       "label": term.role.name + " - " + term.person.name + " - " +
+                      start + " - " + str(term.role.email),
                        "shape": NODE_SHAPE}]
             if len(above) != 0:
                 edges += [{"from": term.role.manager.id, "to": term.role.id, "arrows": "to"}]
@@ -54,7 +55,8 @@ def view_org_center(request, org: str, center: int):
         if center == 0:
             start = term.start.strftime("%B %d, %Y")
             nodes += [{"id": term.role.id,
-                       "label": term.role.name + " - " + term.person.name + " - " + start + " - " + term.role.email,
+                       "label": term.role.name + " - " + term.person.name + " - " +
+                       start + " - " + str(term.role.email),
                        "shape": NODE_SHAPE}]
         else:
             nodes += [{"id": term.role.id,
